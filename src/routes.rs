@@ -46,6 +46,7 @@ pub fn build_router(state: crate::AppState) -> axum::Router {
 
         // Hot Town routes
         .route("/api/hot-town/my-server", get(crate::hot_town::get_my_server))
+        .route("/api/hot-town/channels", post(crate::hot_town::create_channel))
         .route(
             "/api/hot-town/channels/:id/messages",
             get(crate::hot_town::get_messages).post(crate::hot_town::post_message),

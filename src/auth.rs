@@ -54,6 +54,7 @@ struct Claims {
     sub: u64,      // user id
     college_id: u8,
     username: String,
+    role: String,
     exp: usize,
 }
 
@@ -66,6 +67,7 @@ pub struct AuthUser {
     pub id: u64,
     pub college_id: u8,
     pub username: String,
+    pub role: String,
 }
 
 #[async_trait]
@@ -100,6 +102,7 @@ where
             id: data.claims.sub,
             college_id: data.claims.college_id,
             username: data.claims.username,
+            role: data.claims.role,
         })
     }
 }
@@ -110,6 +113,7 @@ fn issue_jwt(user: &UserRow, secret: &str) -> AppResult<String> {
         sub: user.id,
         college_id: user.college_id,
         username: user.username.clone(),
+        role: user.role.clone(),
         exp: expiry.timestamp() as usize,
     };
     encode(

@@ -238,6 +238,13 @@ pub struct CreateMessageRequest {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct CreateChannelRequest {
+    pub name: String,
+    pub display_label: String,
+    pub is_anonymous: bool,
+}
+
+#[derive(Debug, Deserialize)]
 pub struct FeedQuery {
     pub sort: Option<String>, // "hot" (default) | "new"
     pub limit: Option<u32>,

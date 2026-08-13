@@ -181,3 +181,44 @@ mod tests {
         assert_ne!(a1, a3);
     }
 }
+
+pub async fn create_channel(
+    State(state): State<AppState>,
+    user: AuthUser,
+    Json(req): Json<crate::models::CreateChannelRequest>,
+) -> AppResult<(StatusCode, Json<serde_json::Value>)> {
+    // Only admin or moderator can create channels
+    if user.role != "admin" && user.role != "moderator" {
+        return Err(AppError::Forbidden("Only admins or moderators can create channels".to_string()));
+    }
+
+    // Get the server ID for this user's college
+    let server: (u16,) = sqlx::query_as("SELECT id FROM hot_town_servers WHERE college_id = ?")
+        .bind(user.college_id)
+        .fetch_one(&state.db)
+        .await
+        .map_err(|_| AppError::NotFound("Hot Town server not found for your college".to_string()))?;
+
+    let server_id = server.0;
+
+    // Insert the new channel
+    let result = sqlx::query(
+        "INSERT INTO hot_town_channels (server_id, name, display_label, is_anonymous, position) \
+         VALUES (?, ?, ?, ?, (SELECT COALESCE(MAX(position), 0) + 1 FROM hot_town_channels WHERE server_id = ?))"
+    )
+    .bind(server_id)
+    .bind(&req.name)
+    .bind(&req.display_label)
+    .bind(req.is_anonymous)
+    .bind(server_id)
+    .execute(&state.db)
+    .await?;
+
+    Ok((
+        StatusCode::CREATED,
+        Json(serde_json::json!({
+            "message": "Channel created successfully",
+            "channel_id": result.last_insert_id()
+        })),
+    ))
+}
