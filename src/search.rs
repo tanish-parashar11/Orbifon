@@ -201,7 +201,7 @@ pub async fn universal_search(
     .await?;
 
     // Search hashtags
-    let tags: Vec<(String, u32)> = sqlx::query_as(
+    let tags: Vec<(String, i64)> = sqlx::query_as(
         "SELECT tag, COUNT(DISTINCT post_id) as post_count \
          FROM hashtags \
          WHERE tag LIKE ? \

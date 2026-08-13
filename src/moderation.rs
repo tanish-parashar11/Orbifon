@@ -373,17 +373,17 @@ pub async fn review_report(
 // =====================================================================
 
 async fn check_moderator_role(state: &AppState, user_id: u64) -> AppResult<()> {
-    let is_moderator: Option<(bool,)> = sqlx::query_as(
-        "SELECT is_moderator FROM users WHERE id = ? AND is_active = 1"
+    let user_row: Option<(bool, String)> = sqlx::query_as(
+        "SELECT is_moderator, role FROM users WHERE id = ? AND is_active = 1"
     )
     .bind(user_id)
     .fetch_optional(&state.db)
     .await?;
 
-    match is_moderator {
-        Some((true,)) => Ok(()),
+    match user_row {
+        Some((is_mod, role)) if is_mod || role == "admin" || role == "moderator" => Ok(()),
         _ => Err(AppError::Forbidden(
-            "Moderator access required".to_string(),
+            "Moderator or Admin access required".to_string(),
         )),
     }
 }
