@@ -35,6 +35,7 @@ pub struct UserRow {
     pub display_name: String,
     pub avatar_url: Option<String>,
     pub is_active: bool,
+    pub role: String,
 }
 
 #[derive(Debug, Serialize, sqlx::FromRow)]

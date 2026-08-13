@@ -201,9 +201,17 @@ pub async fn register(
     let password_hash = hash_password(&req.password)?;
     let verification_token = uuid::Uuid::new_v4().to_string();
 
+    // Check if any user already exists for this college (First user = Admin)
+    let user_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM users WHERE college_id = ?")
+        .bind(college.id)
+        .fetch_one(&state.db)
+        .await?;
+
+    let role = if user_count.0 == 0 { "admin" } else { "user" };
+
     sqlx::query(
-        "INSERT INTO users (college_id, username, email, password_hash, display_name, verification_token) \
-         VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO users (college_id, username, email, password_hash, display_name, verification_token, role) \
+         VALUES (?, ?, ?, ?, ?, ?, ?)",
     )
     .bind(college.id)
     .bind(&req.username)
@@ -211,8 +219,41 @@ pub async fn register(
     .bind(&password_hash)
     .bind(&req.display_name)
     .bind(&verification_token)
+    .bind(role)
     .execute(&state.db)
     .await?;
+
+    // If first user, ensure Hot Town server and channels exist for this college
+    if user_count.0 == 0 {
+        let server_exists: Option<(u16,)> = sqlx::query_as("SELECT id FROM hot_town_servers WHERE college_id = ?")
+            .bind(college.id)
+            .fetch_optional(&state.db)
+            .await?;
+
+        if server_exists.is_none() {
+            let server_res = sqlx::query("INSERT INTO hot_town_servers (college_id, name, slug) VALUES (?, ?, ?)")
+                .bind(college.id)
+                .bind(format!("Hot Town: {}", college.short_tag))
+                .bind(format!("hot-town-{}", college.slug))
+                .execute(&state.db)
+                .await;
+
+            if let Ok(s_res) = server_res {
+                let server_id = s_res.last_insert_id() as u16;
+                let _ = sqlx::query(
+                    "INSERT INTO hot_town_channels (server_id, name, display_label, position, is_anonymous) VALUES \
+                     (?, 'general-gossip', '#general-gossip', 1, 0), \
+                     (?, 'placement-grind', '#placement-grind', 2, 0), \
+                     (?, 'confessions', '#confessions', 3, 1)"
+                )
+                .bind(server_id)
+                .bind(server_id)
+                .bind(server_id)
+                .execute(&state.db)
+                .await;
+            }
+        }
+    }
 
     // TODO (Step 10 hardening pass): wire this into a real transactional
     // email service. For pilot purposes we log it so you can verify the
