@@ -14,7 +14,7 @@ impl RateLimiter {
         limit: u32,
         window_seconds: u64,
     ) -> AppResult<()> {
-        let count: (u32,) = sqlx::query_as(
+        let count: (i64,) = sqlx::query_as(
             "SELECT COUNT(*) FROM rate_limit_events WHERE user_id = ? AND action = ? AND created_at > DATE_SUB(NOW(), INTERVAL ? SECOND)"
         )
         .bind(user_id)
@@ -23,7 +23,7 @@ impl RateLimiter {
         .fetch_one(&state.db)
         .await?;
 
-        if count.0 >= limit {
+        if count.0 as u32 >= limit {
             return Err(AppError::TooManyRequests(
                 format!("Rate limit exceeded for: {}", action)
             ));

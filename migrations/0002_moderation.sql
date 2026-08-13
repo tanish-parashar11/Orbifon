@@ -69,5 +69,5 @@ CREATE TABLE IF NOT EXISTS reputation_events (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Add columns to users table if they don't exist
-ALTER TABLE users ADD COLUMN IF NOT EXISTS is_moderator TINYINT(1) NOT NULL DEFAULT 0;
-ALTER TABLE users ADD COLUMN IF NOT EXISTS reputation_score INT NOT NULL DEFAULT 0;
+ALTER TABLE users ADD COLUMN is_moderator TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE users ADD COLUMN reputation_score INT NOT NULL DEFAULT 0;

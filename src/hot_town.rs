@@ -201,16 +201,23 @@ pub async fn create_channel(
 
     let server_id = server.0;
 
+    // Get the next position
+    let max_pos: (i32,) = sqlx::query_as("SELECT COALESCE(MAX(position), 0) FROM hot_town_channels WHERE server_id = ?")
+        .bind(server_id)
+        .fetch_one(&state.db)
+        .await?;
+    let next_pos = (max_pos.0 + 1) as u8;
+
     // Insert the new channel
     let result = sqlx::query(
         "INSERT INTO hot_town_channels (server_id, name, display_label, is_anonymous, position) \
-         VALUES (?, ?, ?, ?, (SELECT COALESCE(MAX(position), 0) + 1 FROM hot_town_channels WHERE server_id = ?))"
+         VALUES (?, ?, ?, ?, ?)"
     )
     .bind(server_id)
     .bind(&req.name)
     .bind(&req.display_label)
     .bind(req.is_anonymous)
-    .bind(server_id)
+    .bind(next_pos)
     .execute(&state.db)
     .await?;
 

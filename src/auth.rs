@@ -285,7 +285,7 @@ pub async fn login(
     Json(req): Json<LoginRequest>,
 ) -> AppResult<Json<AuthResponse>> {
     let user = sqlx::query_as::<_, UserRow>(
-        "SELECT id, college_id, username, email, password_hash, display_name, avatar_url, is_active \
+        "SELECT id, college_id, username, email, password_hash, display_name, avatar_url, is_active, role \
          FROM users WHERE email = ?",
     )
     .bind(&req.email)

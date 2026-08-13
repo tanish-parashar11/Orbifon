@@ -124,7 +124,7 @@ pub async fn search_hashtags(
     let offset = q.offset.unwrap_or(0);
     let search_term = format!("{}%", q.q.trim_start_matches('#').to_lowercase());
 
-    let tags: Vec<(String, u32)> = sqlx::query_as(
+    let tags: Vec<(String, i64)> = sqlx::query_as(
         "SELECT tag, COUNT(DISTINCT post_id) as post_count \
          FROM hashtags \
          WHERE tag LIKE ? \

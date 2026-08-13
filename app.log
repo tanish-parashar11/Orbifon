@@ -1,0 +1,167 @@
+[1m[33mwarning[0m[1m: unused import: `std::sync::Arc`[0m
+ [1m[94m--> [0msrc/cache/redis_client.rs:2:5
+  [1m[94m|[0m
+[1m[94m2[0m [1m[94m|[0m use std::sync::Arc;
+  [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^[0m
+  [1m[94m|[0m
+  [1m[94m= [0m[1mnote[0m: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+[1m[33mwarning[0m[1m: unused import: `tokio::sync::RwLock`[0m
+ [1m[94m--> [0msrc/cache/redis_client.rs:3:5
+  [1m[94m|[0m
+[1m[94m3[0m [1m[94m|[0m use tokio::sync::RwLock;
+  [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: unused imports: `auth::AuthUser` and `tags`[0m
+ [1m[94m--> [0msrc/hashtags.rs:2:5
+  [1m[94m|[0m
+[1m[94m2[0m [1m[94m|[0m     auth::AuthUser,
+  [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^[0m
+[1m[94m3[0m [1m[94m|[0m     error::{AppError, AppResult},
+[1m[94m4[0m [1m[94m|[0m     AppState, tags,
+  [1m[94m|[0m               [1m[33m^^^^[0m
+
+[1m[33mwarning[0m[1m: unused import: `http::StatusCode`[0m
+ [1m[94m--> [0msrc/hashtags.rs:8:5
+  [1m[94m|[0m
+[1m[94m8[0m [1m[94m|[0m     http::StatusCode,
+  [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: unused import: `models::*`[0m
+ [1m[94m--> [0msrc/moderation.rs:5:5
+  [1m[94m|[0m
+[1m[94m5[0m [1m[94m|[0m     models::*,
+  [1m[94m|[0m     [1m[33m^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: unused import: `Serialize`[0m
+ [1m[94m--> [0msrc/models/pagination.rs:1:26
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m use serde::{Deserialize, Serialize};
+  [1m[94m|[0m                          [1m[33m^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: unused import: `http::StatusCode`[0m
+ [1m[94m--> [0msrc/profiles.rs:9:5
+  [1m[94m|[0m
+[1m[94m9[0m [1m[94m|[0m     http::StatusCode,
+  [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: unused import: `json`[0m
+ [1m[94m--> [0msrc/ws/handler.rs:6:18
+  [1m[94m|[0m
+[1m[94m6[0m [1m[94m|[0m use serde_json::{json, from_str};
+  [1m[94m|[0m                  [1m[33m^^^^[0m
+
+[1m[33mwarning[0m[1m: unused imports: `ConnectionLimiter`, `MessageCache`, and `PubSubManager`[0m
+  [1m[94m--> [0msrc/ws/handler.rs:14:13
+   [1m[94m|[0m
+[1m[94m14[0m [1m[94m|[0m     cache::{MessageCache, PubSubManager, ConnectionLimiter},
+   [1m[94m|[0m             [1m[33m^^^^^^^^^^^^[0m  [1m[33m^^^^^^^^^^^^^[0m  [1m[33m^^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: field `recommendation` is never read[0m
+  [1m[94m--> [0msrc/content_safety.rs:66:9
+   [1m[94m|[0m
+[1m[94m63[0m [1m[94m|[0m pub struct ContentCheckResult {
+   [1m[94m|[0m            [1m[94m------------------[0m [1m[94mfield in this struct[0m
+[1m[94m...[0m
+[1m[94m66[0m [1m[94m|[0m     pub recommendation: ContentRecommendation,
+   [1m[94m|[0m         [1m[33m^^^^^^^^^^^^^^[0m
+   [1m[94m|[0m
+   [1m[94m= [0m[1mnote[0m: `ContentCheckResult` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+   [1m[94m= [0m[1mnote[0m: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+[1m[33mwarning[0m[1m: variant `Reject` is never constructed[0m
+  [1m[94m--> [0msrc/content_safety.rs:73:5
+   [1m[94m|[0m
+[1m[94m70[0m [1m[94m|[0m pub enum ContentRecommendation {
+   [1m[94m|[0m          [1m[94m---------------------[0m [1m[94mvariant in this enum[0m
+[1m[94m...[0m
+[1m[94m73[0m [1m[94m|[0m     Reject,
+   [1m[94m|[0m     [1m[33m^^^^^^[0m
+   [1m[94m|[0m
+   [1m[94m= [0m[1mnote[0m: `ContentRecommendation` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+[1m[33mwarning[0m[1m: fields `action_taken`, `moderator_id`, and `reviewed_at` are never read[0m
+  [1m[94m--> [0msrc/moderation.rs:31:9
+   [1m[94m|[0m
+[1m[94m21[0m [1m[94m|[0m pub struct ReportRow {
+   [1m[94m|[0m            [1m[94m---------[0m [1m[94mfields in this struct[0m
+[1m[94m...[0m
+[1m[94m31[0m [1m[94m|[0m     pub action_taken: Option<String>,
+   [1m[94m|[0m         [1m[33m^^^^^^^^^^^^[0m
+[1m[94m32[0m [1m[94m|[0m     pub moderator_id: Option<u64>,
+   [1m[94m|[0m         [1m[33m^^^^^^^^^^^^[0m
+[1m[94m33[0m [1m[94m|[0m     pub reviewed_at: Option<chrono::DateTime<chrono::Utc>>,
+   [1m[94m|[0m         [1m[33m^^^^^^^^^^^[0m
+   [1m[94m|[0m
+   [1m[94m= [0m[1mnote[0m: `ReportRow` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+[1m[33mwarning[0m[1m: struct `UserSuspensionRow` is never constructed[0m
+  [1m[94m--> [0msrc/moderation.rs:65:12
+   [1m[94m|[0m
+[1m[94m65[0m [1m[94m|[0m pub struct UserSuspensionRow {
+   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: fields `name` and `email_domain` are never read[0m
+  [1m[94m--> [0msrc/models.rs:22:9
+   [1m[94m|[0m
+[1m[94m20[0m [1m[94m|[0m pub struct CollegeRow {
+   [1m[94m|[0m            [1m[94m----------[0m [1m[94mfields in this struct[0m
+[1m[94m21[0m [1m[94m|[0m     pub id: u8,
+[1m[94m22[0m [1m[94m|[0m     pub name: String,
+   [1m[94m|[0m         [1m[33m^^^^[0m
+[1m[94m23[0m [1m[94m|[0m     pub short_tag: String,
+[1m[94m24[0m [1m[94m|[0m     pub email_domain: String,
+   [1m[94m|[0m         [1m[33m^^^^^^^^^^^^[0m
+   [1m[94m|[0m
+   [1m[94m= [0m[1mnote[0m: `CollegeRow` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+[1m[33mwarning[0m[1m: fields `email`, `display_name`, and `avatar_url` are never read[0m
+  [1m[94m--> [0msrc/models.rs:33:9
+   [1m[94m|[0m
+[1m[94m29[0m [1m[94m|[0m pub struct UserRow {
+   [1m[94m|[0m            [1m[94m-------[0m [1m[94mfields in this struct[0m
+[1m[94m...[0m
+[1m[94m33[0m [1m[94m|[0m     pub email: String,
+   [1m[94m|[0m         [1m[33m^^^^^[0m
+[1m[94m34[0m [1m[94m|[0m     pub password_hash: String,
+[1m[94m35[0m [1m[94m|[0m     pub display_name: String,
+   [1m[94m|[0m         [1m[33m^^^^^^^^^^^^[0m
+[1m[94m36[0m [1m[94m|[0m     pub avatar_url: Option<String>,
+   [1m[94m|[0m         [1m[33m^^^^^^^^^^[0m
+   [1m[94m|[0m
+   [1m[94m= [0m[1mnote[0m: `UserRow` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+[1m[33mwarning[0m[1m: associated function `should_require_moderation_review` is never used[0m
+  [1m[94m--> [0msrc/reputation.rs:38:18
+   [1m[94m|[0m
+[1m[94m 5[0m [1m[94m|[0m impl ReputationSystem {
+   [1m[94m|[0m [1m[94m---------------------[0m [1m[94massociated function in this implementation[0m
+[1m[94m...[0m
+[1m[94m38[0m [1m[94m|[0m     pub async fn should_require_moderation_review(
+   [1m[94m|[0m                  [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: field `search_type` is never read[0m
+  [1m[94m--> [0msrc/search.rs:16:9
+   [1m[94m|[0m
+[1m[94m13[0m [1m[94m|[0m pub struct SearchQuery {
+   [1m[94m|[0m            [1m[94m-----------[0m [1m[94mfield in this struct[0m
+[1m[94m...[0m
+[1m[94m16[0m [1m[94m|[0m     pub search_type: Option<String>, // "posts", "users", "hashtags"
+   [1m[94m|[0m         [1m[33m^^^^^^^^^^^[0m
+   [1m[94m|[0m
+   [1m[94m= [0m[1mnote[0m: `SearchQuery` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+[1m[33mwarning[0m[1m: constant `CONNECTION_TIMEOUT` is never used[0m
+  [1m[94m--> [0msrc/ws/handler.rs:23:7
+   [1m[94m|[0m
+[1m[94m23[0m [1m[94m|[0m const CONNECTION_TIMEOUT: Duration = Duration::from_secs(300); // 5 minutes
+   [1m[94m|[0m       [1m[33m^^^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m: `orbifon` (bin "orbifon") generated 18 warnings (run `cargo fix --bin "orbifon" -p orbifon` to apply 9 suggestions)
+[1m[92m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 0.45s
+[1m[92m     Running[0m `target/debug/orbifon`
+[2m2026-08-13T02:18:12.050495Z[0m [32m INFO[0m [2morbifon[0m[2m:[0m Starting Orbifon v1.0.0 on port 8080
+
+thread 'main' (16817) panicked at src/main.rs:54:10:
+Failed to run database migrations: Dirty(2)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

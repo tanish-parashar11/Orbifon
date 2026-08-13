@@ -53,7 +53,7 @@ pub async fn get_posts_by_hashtag(
 pub async fn get_trending_hashtags(
     State(state): State<AppState>,
 ) -> AppResult<Json<Vec<serde_json::Value>>> {
-    let tags: Vec<(String, u32)> = sqlx::query_as(
+    let tags: Vec<(String, i64)> = sqlx::query_as(
         "SELECT tag, COUNT(DISTINCT post_id) as post_count \
          FROM hashtags \
          WHERE created_at > DATE_SUB(NOW(), INTERVAL 7 DAY) \
